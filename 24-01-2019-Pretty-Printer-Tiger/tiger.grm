@@ -1,0 +1,59 @@
+%%
+
+%eop EOF
+%verbose
+%pure
+%name Tiger
+
+(* The terminals or tokens of the language *)
+%term EOF
+	| INT of int
+    | PLUS
+	| FOR
+    | MINUS
+    | MUL
+    | DIV
+    | EQ
+    | IF
+    | THEN
+    | ELSE
+    | STRING of string
+    | LET | IN | END
+
+(* The nonterminals of the language *)
+%nonterm exp     of Ast.exp
+       | explist    of Ast.exp list
+       | program of Ast.exp 
+
+%noshift EOF
+(*
+
+Operator precedence and associativity. The %left says the operator is
+left associative and the precedence increase as you go down this list.
+
+*)
+
+%left PLUS MINUS  (* + and - are of same precedence *)
+%left MUL DIV        (* higher than + and -  AND * and / are of same precedence *)
+
+(* The type that captures position in the input *)
+%pos int
+
+%%
+
+program : exp                 ( exp )
+	
+exp     : 
+			INT                ( Ast.intExp INT     )
+		| STRING (Ast.stringExp (STRING, STRINGleft))
+        | exp PLUS exp         ( Ast.opExp  {left=exp1, oper=Ast.plusOp, right= exp2, pos=PLUSleft} )
+	| exp MINUS exp        ( Ast.opExp  {left=exp1, oper=Ast.minOp, right= exp2, pos=MINUSleft} )
+	| exp MUL exp        ( Ast.opExp  {left=exp1, oper=Ast.mulOp, right= exp2, pos=MULleft} )
+	| exp DIV exp          ( Ast.opExp  {left=exp1, oper=Ast.divOp, right= exp2, pos=DIVleft} )
+	| exp EQ exp          ( Ast.opExp  {left=exp1, oper=Ast.eqOp, right= exp2, pos=EQleft} )	
+	| LET exp IN exp END   ( Ast.letExp {decs= exp1, body= exp2, pos= LETleft}) 
+	| IF  exp THEN exp ELSE exp (Ast.ifExp {cond=exp1, body1= exp2, body2= exp3, pos=IFleft})
+
+explist    : (nil)
+	| exp explist    ( exp :: explist         )
+

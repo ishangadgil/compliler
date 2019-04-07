@@ -1,0 +1,427 @@
+14 shift/reduce conflicts
+2 rules not reduced
+
+warning: rule <explist : > will never be reduced
+warning: rule <explist : exp explist > will never be reduced
+error:  state 13: shift/reduce conflict (shift EQ, reduce by rule 7)
+error:  state 13: shift/reduce conflict (shift DIV, reduce by rule 7)
+error:  state 13: shift/reduce conflict (shift MUL, reduce by rule 7)
+error:  state 13: shift/reduce conflict (shift MINUS, reduce by rule 7)
+error:  state 13: shift/reduce conflict (shift PLUS, reduce by rule 7)
+error:  state 14: shift/reduce conflict (shift EQ, reduce by rule 6)
+error:  state 15: shift/reduce conflict (shift EQ, reduce by rule 5)
+error:  state 16: shift/reduce conflict (shift EQ, reduce by rule 4)
+error:  state 17: shift/reduce conflict (shift EQ, reduce by rule 3)
+error:  state 24: shift/reduce conflict (shift EQ, reduce by rule 9)
+error:  state 24: shift/reduce conflict (shift DIV, reduce by rule 9)
+error:  state 24: shift/reduce conflict (shift MUL, reduce by rule 9)
+error:  state 24: shift/reduce conflict (shift MINUS, reduce by rule 9)
+error:  state 24: shift/reduce conflict (shift PLUS, reduce by rule 9)
+
+state 0:
+
+	program : . exp 
+
+	INT	shift 5
+	IF	shift 4
+	STRING	shift 3
+	LET	shift 2
+
+	exp	goto 1
+	program	goto 25
+
+	.	error
+
+
+state 1:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . MUL exp 
+	exp : exp . DIV exp 
+	exp : exp . EQ exp 
+	program : exp .  (reduce by rule 0)
+
+	PLUS	shift 10
+	MINUS	shift 9
+	MUL	shift 8
+	DIV	shift 7
+	EQ	shift 6
+
+
+	.	reduce by rule 0
+
+
+state 2:
+
+	exp : LET . exp IN exp END 
+
+	INT	shift 5
+	IF	shift 4
+	STRING	shift 3
+	LET	shift 2
+
+	exp	goto 11
+
+	.	error
+
+
+state 3:
+
+	exp : STRING .  (reduce by rule 2)
+
+
+
+	.	reduce by rule 2
+
+
+state 4:
+
+	exp : IF . exp THEN exp ELSE exp 
+
+	INT	shift 5
+	IF	shift 4
+	STRING	shift 3
+	LET	shift 2
+
+	exp	goto 12
+
+	.	error
+
+
+state 5:
+
+	exp : INT .  (reduce by rule 1)
+
+
+
+	.	reduce by rule 1
+
+
+state 6:
+
+	exp : exp EQ . exp 
+
+	INT	shift 5
+	IF	shift 4
+	STRING	shift 3
+	LET	shift 2
+
+	exp	goto 13
+
+	.	error
+
+
+state 7:
+
+	exp : exp DIV . exp 
+
+	INT	shift 5
+	IF	shift 4
+	STRING	shift 3
+	LET	shift 2
+
+	exp	goto 14
+
+	.	error
+
+
+state 8:
+
+	exp : exp MUL . exp 
+
+	INT	shift 5
+	IF	shift 4
+	STRING	shift 3
+	LET	shift 2
+
+	exp	goto 15
+
+	.	error
+
+
+state 9:
+
+	exp : exp MINUS . exp 
+
+	INT	shift 5
+	IF	shift 4
+	STRING	shift 3
+	LET	shift 2
+
+	exp	goto 16
+
+	.	error
+
+
+state 10:
+
+	exp : exp PLUS . exp 
+
+	INT	shift 5
+	IF	shift 4
+	STRING	shift 3
+	LET	shift 2
+
+	exp	goto 17
+
+	.	error
+
+
+state 11:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . MUL exp 
+	exp : exp . DIV exp 
+	exp : exp . EQ exp 
+	exp : LET exp . IN exp END 
+
+	PLUS	shift 10
+	MINUS	shift 9
+	MUL	shift 8
+	DIV	shift 7
+	EQ	shift 6
+	IN	shift 18
+
+
+	.	error
+
+
+state 12:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . MUL exp 
+	exp : exp . DIV exp 
+	exp : exp . EQ exp 
+	exp : IF exp . THEN exp ELSE exp 
+
+	PLUS	shift 10
+	MINUS	shift 9
+	MUL	shift 8
+	DIV	shift 7
+	EQ	shift 6
+	THEN	shift 19
+
+
+	.	error
+
+error:  state 13: shift/reduce conflict (shift EQ, reduce by rule 7)
+error:  state 13: shift/reduce conflict (shift DIV, reduce by rule 7)
+error:  state 13: shift/reduce conflict (shift MUL, reduce by rule 7)
+error:  state 13: shift/reduce conflict (shift MINUS, reduce by rule 7)
+error:  state 13: shift/reduce conflict (shift PLUS, reduce by rule 7)
+
+state 13:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . MUL exp 
+	exp : exp . DIV exp 
+	exp : exp . EQ exp 
+	exp : exp EQ exp .  (reduce by rule 7)
+
+	PLUS	shift 10
+	MINUS	shift 9
+	MUL	shift 8
+	DIV	shift 7
+	EQ	shift 6
+
+
+	.	reduce by rule 7
+
+error:  state 14: shift/reduce conflict (shift EQ, reduce by rule 6)
+
+state 14:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . MUL exp 
+	exp : exp . DIV exp 
+	exp : exp DIV exp .  (reduce by rule 6)
+	exp : exp . EQ exp 
+
+	EQ	shift 6
+
+
+	.	reduce by rule 6
+
+error:  state 15: shift/reduce conflict (shift EQ, reduce by rule 5)
+
+state 15:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . MUL exp 
+	exp : exp MUL exp .  (reduce by rule 5)
+	exp : exp . DIV exp 
+	exp : exp . EQ exp 
+
+	EQ	shift 6
+
+
+	.	reduce by rule 5
+
+error:  state 16: shift/reduce conflict (shift EQ, reduce by rule 4)
+
+state 16:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp MINUS exp .  (reduce by rule 4)
+	exp : exp . MUL exp 
+	exp : exp . DIV exp 
+	exp : exp . EQ exp 
+
+	MUL	shift 8
+	DIV	shift 7
+	EQ	shift 6
+
+
+	.	reduce by rule 4
+
+error:  state 17: shift/reduce conflict (shift EQ, reduce by rule 3)
+
+state 17:
+
+	exp : exp . PLUS exp 
+	exp : exp PLUS exp .  (reduce by rule 3)
+	exp : exp . MINUS exp 
+	exp : exp . MUL exp 
+	exp : exp . DIV exp 
+	exp : exp . EQ exp 
+
+	MUL	shift 8
+	DIV	shift 7
+	EQ	shift 6
+
+
+	.	reduce by rule 3
+
+
+state 18:
+
+	exp : LET exp IN . exp END 
+
+	INT	shift 5
+	IF	shift 4
+	STRING	shift 3
+	LET	shift 2
+
+	exp	goto 20
+
+	.	error
+
+
+state 19:
+
+	exp : IF exp THEN . exp ELSE exp 
+
+	INT	shift 5
+	IF	shift 4
+	STRING	shift 3
+	LET	shift 2
+
+	exp	goto 21
+
+	.	error
+
+
+state 20:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . MUL exp 
+	exp : exp . DIV exp 
+	exp : exp . EQ exp 
+	exp : LET exp IN exp . END 
+
+	PLUS	shift 10
+	MINUS	shift 9
+	MUL	shift 8
+	DIV	shift 7
+	EQ	shift 6
+	END	shift 22
+
+
+	.	error
+
+
+state 21:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . MUL exp 
+	exp : exp . DIV exp 
+	exp : exp . EQ exp 
+	exp : IF exp THEN exp . ELSE exp 
+
+	PLUS	shift 10
+	MINUS	shift 9
+	MUL	shift 8
+	DIV	shift 7
+	EQ	shift 6
+	ELSE	shift 23
+
+
+	.	error
+
+
+state 22:
+
+	exp : LET exp IN exp END .  (reduce by rule 8)
+
+
+
+	.	reduce by rule 8
+
+
+state 23:
+
+	exp : IF exp THEN exp ELSE . exp 
+
+	INT	shift 5
+	IF	shift 4
+	STRING	shift 3
+	LET	shift 2
+
+	exp	goto 24
+
+	.	error
+
+error:  state 24: shift/reduce conflict (shift EQ, reduce by rule 9)
+error:  state 24: shift/reduce conflict (shift DIV, reduce by rule 9)
+error:  state 24: shift/reduce conflict (shift MUL, reduce by rule 9)
+error:  state 24: shift/reduce conflict (shift MINUS, reduce by rule 9)
+error:  state 24: shift/reduce conflict (shift PLUS, reduce by rule 9)
+
+state 24:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . MUL exp 
+	exp : exp . DIV exp 
+	exp : exp . EQ exp 
+	exp : IF exp THEN exp ELSE exp .  (reduce by rule 9)
+
+	PLUS	shift 10
+	MINUS	shift 9
+	MUL	shift 8
+	DIV	shift 7
+	EQ	shift 6
+
+
+	.	reduce by rule 9
+
+
+state 25:
+
+
+	EOF	accept
+
+
+	.	error
+
+52 of 118 action table entries left after compaction
+12 goto table entries
